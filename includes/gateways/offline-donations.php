@@ -129,6 +129,7 @@ function give_get_default_offline_donation_content() {
  *
  * Gets the default offline donation email content
  *
+ * @unreleased Use __() instead of esc_html__() so the default text keeps its quotes instead of showing &quot; (SMTNC-3260)
  * @since 2.14.0 Remove unnecessary sprintf
  *
  * @return string
@@ -138,16 +139,16 @@ function give_get_default_offline_donation_email_content() {
 	$default_text .= '<p>' . __( 'Thank you for letting us know that you\'re mailing a check! Your generosity is greatly appreciated. Here are those steps again:', 'give' ) . '</p>';
 	$default_text .= '<ol>';
 	$default_text .= '<li>';
-	$default_text .= esc_html__( 'Write a check payable to "{sitename}"', 'give' );
+	$default_text .= __( 'Write a check payable to "{sitename}"', 'give' );
 	$default_text .= '</li>';
 	$default_text .= '<li>';
-	$default_text .= esc_html__( 'On the memo line of the check, indicate that the donation is for "{form_title}"', 'give' );
+	$default_text .= __( 'On the memo line of the check, indicate that the donation is for "{form_title}"', 'give' );
 	$default_text .= '</li>';
 	$default_text .= '<li>' . __( 'Mail your check to:', 'give' ) . '</li>';
 	$default_text .= '</ol>';
 	$default_text .= '{offline_mailing_address}<br>';
-	$default_text .= '<p>' . esc_html__( 'Once we receive the check, we will mark it as complete in our system, which will generate an email receipt for your records. Please contact us with any questions you may have!', 'give' ) . '</p>';
-	$default_text .= '<p>' . esc_html__( 'Thanks in advance!', 'give' ) . '</p>';
+	$default_text .= '<p>' . __( 'Once we receive the check, we will mark it as complete in our system, which will generate an email receipt for your records. Please contact us with any questions you may have!', 'give' ) . '</p>';
+	$default_text .= '<p>' . __( 'Thanks in advance!', 'give' ) . '</p>';
 	$default_text .= '<p>{sitename}</p>';
 
 	return apply_filters( 'give_default_offline_donation_content', $default_text );
