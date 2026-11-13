@@ -26,7 +26,7 @@ jobs:
     # This workflow contains a single job called "test"
     test:
         # The type of runner that the job will run on
-        runs-on: blacksmith-4vcpu-ubuntu-2404
+        runs-on: ubuntu-24.04
 
         # The job reads the checkout and runs the test suite, nothing else.
         permissions:
@@ -151,7 +151,7 @@ jobs:
     # is MariaDB and cannot be changed, which makes this the MariaDB half of the matrix: the job
     # above covers MySQL.
     test-mariadb:
-        runs-on: blacksmith-4vcpu-ubuntu-2404
+        runs-on: ubuntu-24.04
 
         # A run takes a few minutes. The cap is for a database that stops answering, which would
         # otherwise hold the job, and a release waiting on it, for six hours.
