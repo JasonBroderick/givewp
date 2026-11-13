@@ -79,7 +79,7 @@ permissions:
 
 jobs:
     zip:
-        runs-on: blacksmith-4vcpu-ubuntu-2404
+        runs-on: ubuntu-24.04
         env:
             # The secrets context is not available in a step's `if`, so whether the bucket and Slack are
             # configured is decided here. Without the secrets the zip is still built and attached as an
