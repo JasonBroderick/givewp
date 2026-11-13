@@ -394,6 +394,7 @@ add_action( 'give_delete_payment', 'give_trigger_donation_delete' );
 /**
  * AJAX Store Donation Note
  *
+ * @unreleased Pass the donation ID to the note HTML so the new note's Delete link works without a reload.
  * @since 4.19.1 Escape output. Unslash and sanitize the request input.
  * @since 2.25.3 Add nonce check.
  */
@@ -443,7 +444,7 @@ function give_ajax_store_payment_note() {
 		do_action( 'give_donor-note_email_notification', $note_id, $payment_id );
 	}
 
-	die( wp_kses_post( give_get_payment_note_html( $note_id ) ) );
+	die( wp_kses_post( give_get_payment_note_html( $note_id, $payment_id ) ) );
 }
 
 add_action( 'wp_ajax_give_insert_payment_note', 'give_ajax_store_payment_note' );
