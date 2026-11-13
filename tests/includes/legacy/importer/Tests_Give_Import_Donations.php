@@ -240,6 +240,25 @@ class Tests_Give_Import_Donations extends Give_Unit_Test_Case {
 	}
 
 	/**
+	 * A trailing newline must not be counted as an extra row.
+	 *
+	 * @unreleased
+	 */
+	public function test_get_csv_data_from_file_dir_ignores_trailing_newline() {
+		$rows = "Amount,First Name,Email\n10,Jane,jane@example.com\n20,John,john@example.com";
+
+		foreach ( array( $rows, $rows . "\n", $rows . "\r\n", $rows . "\n\n" ) as $content ) {
+			$file = wp_tempnam( 'give-import-test.csv' );
+			file_put_contents( $file, $content );
+
+			// Header + 2 donations; the import screen subtracts the header row.
+			$this->assertSame( 3, $this->importer_class->get_csv_data_from_file_dir( $file ) );
+
+			unlink( $file );
+		}
+	}
+
+	/**
 	 * Test by uploading live donation from CSV
 	 *
 	 * @since 2.1

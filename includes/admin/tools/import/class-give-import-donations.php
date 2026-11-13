@@ -725,6 +725,9 @@ if ( ! class_exists( 'Give_Import_Donations' ) ) {
 		/**
 		 * Get data from File
 		 *
+		 * Blank lines, such as a trailing newline at the end of the file, are not counted.
+		 *
+		 * @unreleased Count only non-empty lines so a trailing newline is not counted as a donation.
 		 * @since 2.1
 		 *
 		 * @param $file_dir
@@ -734,9 +737,13 @@ if ( ! class_exists( 'Give_Import_Donations' ) ) {
 		public function get_csv_data_from_file_dir( $file_dir ) {
 			$total = false;
 			if ( $file_dir ) {
-				$file = new SplFileObject( $file_dir, 'r' );
-				$file->seek( PHP_INT_MAX );
-				$total = $file->key() + 1;
+				$file  = new SplFileObject( $file_dir, 'r' );
+				$total = 0;
+				foreach ( $file as $line ) {
+					if ( '' !== trim( $line ) ) {
+						$total ++;
+					}
+				}
 			}
 
 			return $total;
