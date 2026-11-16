@@ -28,6 +28,7 @@ class TransferController
     }
 
     /**
+     * @unreleased Skip the default form check when the campaign has no default form.
      * @since 4.14.2 updated logic to search for non-core campaigns (e.g., P2P)
      * @since 3.0.0
      */
@@ -44,7 +45,7 @@ class TransferController
             if ($campaign = $campaignRepository->getByFormId($formV2->id)) {
                 $defaultForm = $campaign->defaultForm();
 
-                if ($defaultForm->id === $formV2->id) {
+                if ($defaultForm && $defaultForm->id === $formV2->id) {
                     $campaignRepository->updateDefaultCampaignForm($campaign, $v3FormId);
                 }
             } else {

@@ -46,18 +46,20 @@ class CampaignViewModel
     }
 
     /**
+     * @unreleased Return a null defaultFormTitle when the campaign has no default form.
      * @since 4.0.0
      */
     public function exports(): array
     {
         $pagePermalink = $this->getPagePermalink();
+        $defaultForm = $this->campaign->defaultForm();
 
         return [
             'id' => $this->campaign->id,
             'pageId' => $pagePermalink ? (int)$this->campaign->pageId : null,
             'pagePermalink' => $pagePermalink,
             'defaultFormId' => $this->campaign->defaultFormId,
-            'defaultFormTitle' => $this->campaign->defaultForm()->title,
+            'defaultFormTitle' => $defaultForm ? $defaultForm->title : null,
             'type' => $this->campaign->type->getValue(),
             'title' => $this->campaign->title,
             'shortDescription' => $this->campaign->shortDescription,

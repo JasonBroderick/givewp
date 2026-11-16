@@ -3,6 +3,7 @@
 namespace Give\Tests\Unit\Campaigns\Models;
 
 use Exception;
+use Give\API\REST\V3\Routes\Campaigns\ViewModels\CampaignViewModel;
 use Give\Campaigns\Models\Campaign;
 use Give\Campaigns\Repositories\CampaignRepository;
 use Give\DonationForms\Models\DonationForm;
@@ -90,5 +91,20 @@ final class CampaignModelTest extends TestCase
         give(CampaignRepository::class)->addCampaignForm($campaign, $newDefaultForm->id, true);
 
         $this->assertEquals($newDefaultForm->id, $campaign->defaultFormId);
+    }
+
+    /**
+     * @unreleased
+     *
+     * @throws Exception
+     */
+    public function testDefaultFormReturnsNullWhenCampaignHasNoDefaultForm()
+    {
+        /** @var Campaign $campaign */
+        $campaign = Campaign::factory()->create();
+        $campaign->defaultFormId = null;
+
+        $this->assertNull($campaign->defaultForm());
+        $this->assertNull((new CampaignViewModel($campaign))->exports()['defaultFormTitle']);
     }
 }
