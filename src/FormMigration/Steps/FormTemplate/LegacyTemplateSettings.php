@@ -12,17 +12,36 @@ class LegacyTemplateSettings extends FormMigrationStep
         return 'legacy' === $this->formV2->getFormTemplate();
     }
 
+    /**
+     * @unreleased Default missing template settings to avoid undefined array key warnings.
+     */
     public function process()
     {
         [
             'display_settings' => $displaySettings,
-        ] = $this->formV2->getFormTemplateSettings();
+        ] = wp_parse_args($this->formV2->getFormTemplateSettings(), [
+            'display_settings' => [],
+        ]);
 
         $this->displaySettings($displaySettings);
     }
 
+    /**
+     * @unreleased Default missing display settings to avoid undefined array key warnings.
+     */
     protected function displaySettings($settings)
     {
+        $settings = wp_parse_args((array)$settings, [
+            'display_style' => 'buttons',
+            'payment_display' => 'onpage',
+            'reveal_label' => '',
+            'checkout_label' => __('Donate Now', 'give'),
+            'form_floating_labels' => 'global',
+            'display_content' => 'disabled',
+            'content_placement' => 'give_pre_form',
+            'form_content' => '',
+        ]);
+
         [
             'display_style' => $displayStyle, // 'buttons',
             'payment_display' => $paymentDisplay, // 'onpage',
